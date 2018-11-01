@@ -3,7 +3,7 @@ import time
 import threading
 import queue
 import pickle
-import colorama
+from . import colorama
 colorama.init(autoreset=True)
 
 class Sender(threading.Thread):
@@ -25,6 +25,8 @@ class Sender(threading.Thread):
 		self.queue = queue.PriorityQueue()
 
 		self.__class__.senders.append(self)
+
+		self.daemon = True
 
 		self.running = True
 		self.start()
@@ -73,6 +75,8 @@ class Receiver(threading.Thread):
 		self.recvfunc = recvfunc
 
 		self.__class__.receivers.append(self)
+
+		self.daemon = True
 
 		self.running = True
 		self.start()
